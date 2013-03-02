@@ -6,8 +6,15 @@ import java.util.ArrayList;
 public class Menu {
 
 	private ArrayList<Options> _options;
+	private String _title;
 
 	public Menu() {
+		_title = null;
+		_options = new ArrayList<Options>();
+	}
+	
+	public Menu(String title) {
+		_title = title;
 		_options = new ArrayList<Options>();
 	}
 
@@ -24,6 +31,10 @@ public class Menu {
 		boolean exit = false;
 
 		while (!exit) {
+			
+			if (_title != null)
+				System.out.println("\n" + _title);
+			
 			printOptions();
 
 			boolean commandFound = false;
