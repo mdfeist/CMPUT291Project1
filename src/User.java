@@ -132,6 +132,47 @@ public class User {
 			System.err.println("SQLException: " + e.getMessage());
 		}
 	}
+	
+	public void create(String email, String name, String password) {
+		// Get connection to database
+		Connection m_con = Database.getConnection();
+
+		// Check connection
+		if (m_con == null) {
+			System.out.println("Unable to Connect to Server");
+			return;
+		}
+
+		// Create Statement
+		Statement stmt;
+
+		try {
+			stmt = m_con.createStatement();
+			
+			// Query
+			String query = "INSERT INTO users VALUES ('" + email + "','" + name + "','" + password +"',null)";
+			
+			stmt.executeUpdate(query);
+			stmt.close();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException: " + e.getMessage());
+		}
+
+		// Close Connection
+		try {
+			m_con.close();
+		} catch (SQLException e) {
+			System.err.println("SQLException: " + e.getMessage());
+		}
+		
+		// Check if user was created
+		if (userExist(email))
+		{
+			_isValid = true;
+			_email = email;
+		}
+	}
 
 	public void setValid(boolean valid) {
 		_isValid = valid;

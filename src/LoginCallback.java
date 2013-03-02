@@ -2,7 +2,7 @@ public class LoginCallback implements Callback
 {
 	public LoginCallback() {}
 	
-	public void loginView()
+	public void login()
 	{	
 		// User Info
 		String email = null;
@@ -17,7 +17,6 @@ public class LoginCallback implements Callback
 		System.out.println("password: ");
 		password = Menu.getKeyBoard();
 		
-		
 		System.out.println("\nLogging In ...\n");
 		
 		User.getInstance().login(email, password);
@@ -26,9 +25,7 @@ public class LoginCallback implements Callback
 
 	@Override
 	public int callback() {
-		loginView();
+		login();
 		return Callback.OK;
-	};
-	
-	
+	}
 }
