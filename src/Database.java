@@ -6,15 +6,22 @@ import java.sql.SQLException;
 
 public class Database {
 	
+	// Static Instance
+	private static Database _instance = null;
+	
+	// Static Variables
 	public static final String m_url = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
 	public static final String m_driverName = "oracle.jdbc.driver.OracleDriver";
 
 	public static final String m_userName = "mdfeist";
 	public static final String m_password = "tiger291";
 	
-	public static Connection getConnection()
+	// Instance Variables
+	private Connection _connection;
+	
+	private Database() 
 	{
-		Connection m_con = null;
+		_connection = null;
 		
 		try {
 			Class<?> drvClass = Class.forName(m_driverName);
@@ -25,11 +32,31 @@ public class Database {
 		}
 		
 		try {
-			m_con = DriverManager.getConnection(m_url, m_userName, m_password);
+			_connection = DriverManager.getConnection(m_url, m_userName, m_password);
 		} catch (SQLException ex) {
 			System.err.println("SQLException: " + ex.getMessage());
 		}
-		
-		return m_con;
+	}
+
+	public static Database getInstance() {
+		if (_instance == null)
+			_instance = new Database();
+
+		return _instance;
+	}
+	
+	public Connection getConnection()
+	{
+		return _connection;
+	}
+	
+	public void closeConnection()
+	{
+		// Close Connection
+		try {
+			_connection.close();
+		} catch (SQLException e) {
+			System.err.println("SQLException: " + e.getMessage());
+		}
 	}
 }

@@ -25,7 +25,7 @@ public class User {
 
 	public boolean userExist(String email) {
 		// Get connection to database
-		Connection m_con = Database.getConnection();
+		Connection m_con = Database.getInstance().getConnection();
 
 		// Check connection
 		if (m_con == null) {
@@ -62,19 +62,12 @@ public class User {
 			System.err.println("SQLException: " + e.getMessage());
 		}
 
-		// Close Connection
-		try {
-			m_con.close();
-		} catch (SQLException e) {
-			System.err.println("SQLException: " + e.getMessage());
-		}
-
 		return userFound;
 	}
 
 	public void login(String email, String password) {
 		// Get connection to database
-		Connection m_con = Database.getConnection();
+		Connection m_con = Database.getInstance().getConnection();
 
 		// Check connection
 		if (m_con == null) {
@@ -124,18 +117,11 @@ public class User {
 		} catch (SQLException e) {
 			System.err.println("SQLException: " + e.getMessage());
 		}
-
-		// Close Connection
-		try {
-			m_con.close();
-		} catch (SQLException e) {
-			System.err.println("SQLException: " + e.getMessage());
-		}
 	}
 	
 	public void create(String email, String name, String password) {
 		// Get connection to database
-		Connection m_con = Database.getConnection();
+		Connection m_con = Database.getInstance().getConnection();
 
 		// Check connection
 		if (m_con == null) {
@@ -155,13 +141,6 @@ public class User {
 			stmt.executeUpdate(query);
 			stmt.close();
 
-		} catch (SQLException e) {
-			System.err.println("SQLException: " + e.getMessage());
-		}
-
-		// Close Connection
-		try {
-			m_con.close();
 		} catch (SQLException e) {
 			System.err.println("SQLException: " + e.getMessage());
 		}
