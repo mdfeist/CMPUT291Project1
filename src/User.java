@@ -152,7 +152,13 @@ public class User {
 			_email = email;
 		}
 	}
-
+	
+	public void logout()
+	{
+		_isValid = false;
+		_email = null;
+	}
+	
 	public void setValid(boolean valid) {
 		_isValid = valid;
 	}
