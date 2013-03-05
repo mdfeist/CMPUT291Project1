@@ -1,7 +1,7 @@
 /**
  * Main function to start the program.
  * 
- * @author Michael Feist
+ * @author Michael Feist and George Coomber
  */
 public class Main {
 
@@ -19,7 +19,12 @@ public class Main {
 		
 		// Main Menu
 		Menu mainMenu = new Menu("Main Menu");
+		mainMenu.addOption("s", "to search for ads", new AdSearchCallback());
+		mainMenu.addOption("l", "to list your own ads", new ListCallback());
+		mainMenu.addOption("u", "to search for users", new UserSearchCallback());
+		mainMenu.addOption("p", "to post an ad", new PostCallback());
 		mainMenu.addOption("q", "to logout", new LogoutCallback());
+		
 		
 		boolean run = true;
 		
