@@ -1,14 +1,42 @@
+/**
+ * Main function to start the program.
+ * 
+ * @author Michael Feist
+ */
 public class Main {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Menu startScreen = new Menu("Main Menu");
-		startScreen.addOption("l", "log into an existing account", new LoginCallback());
-		startScreen.addOption("c", "create new account", new CreateUserCallback());
+		// Start Screen
+		Menu startScreen = new Menu("Login Screen");
+		startScreen.addOption("l", "log into an existing account",
+				new LoginCallback());
+		startScreen.addOption("c", "create new account",
+				new CreateUserCallback());
 		startScreen.addOption("q", "quit", new ExitCallback());
-		startScreen.run();
+		
+		// Main Menu
+		Menu mainMenu = new Menu("Main Menu");
+		mainMenu.addOption("q", "to logout", new LogoutCallback());
+		
+		boolean run = true;
+		
+		// Run the main loop
+		while (run)
+		{
+			// Have the user login
+			startScreen.run();
+			
+			if (User.getInstance().isValid())
+			{
+				mainMenu.run();
+			} else
+			{
+				run = false;
+			}
+		}
 	}
 
 }

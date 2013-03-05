@@ -3,6 +3,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/**
+ * Creates a generic menu.
+ * 
+ * @author Michael Feist
+ */
 public class Menu {
 
 	private ArrayList<Options> _options;

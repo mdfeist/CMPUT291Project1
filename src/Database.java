@@ -3,7 +3,11 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
+/**
+ * This singleton class handles the database connection.
+ * 
+ * @author Michael Feist
+ */
 public class Database {
 	
 	// Static Instance

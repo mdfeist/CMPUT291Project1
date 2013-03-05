@@ -1,3 +1,10 @@
+
+/**
+ * This is where users who already are
+ * registered can login to the system.
+ * 
+ * @author Michael Feist
+ */
 public class LoginCallback implements Callback
 {
 	public LoginCallback() {}
@@ -26,6 +33,10 @@ public class LoginCallback implements Callback
 	@Override
 	public int callback() {
 		login();
+		
+		if (User.getInstance().isValid())
+			return Callback.BACK;
+		
 		return Callback.OK;
 	}
 }

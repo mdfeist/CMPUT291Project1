@@ -1,4 +1,8 @@
-
+/**
+ * An interface for a generic callback class.
+ * 
+ * @author Michael Feist
+ */
 public interface Callback
 {
 	public static final int ERROR = -1;

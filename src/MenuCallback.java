@@ -1,4 +1,8 @@
-
+/**
+ * Calls a generic menu.
+ * 
+ * @author Michael Feist
+ */
 public class MenuCallback implements Callback
 {
 	private Menu menu;

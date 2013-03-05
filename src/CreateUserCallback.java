@@ -1,3 +1,11 @@
+/**
+ * This is where new users can create
+ * a new account and login to the 
+ * system.
+ * 
+ * @author Michael Feist
+ */
+
 public class CreateUserCallback implements Callback {
 
 	public CreateUserCallback() {}
@@ -45,6 +53,10 @@ public class CreateUserCallback implements Callback {
 	@Override
 	public int callback() {
 		createView();
+		
+		if (User.getInstance().isValid())
+			return Callback.BACK;
+		
 		return Callback.OK;
 	}
 }

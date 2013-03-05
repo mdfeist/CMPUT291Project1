@@ -1,4 +1,10 @@
-
+/**
+ * Used by a menu. Holds a command, message, and a
+ * callback that is called when the user selects
+ * a menu item.
+ * 
+ * @author Michael Feist
+ */
 public class Options {
 	
 	private String command;

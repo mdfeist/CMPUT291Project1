@@ -3,6 +3,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * This singleton class handles the user information.
+ * 
+ * @author Michael Feist
+ */
 public class User {
 
 	// Static Instance
