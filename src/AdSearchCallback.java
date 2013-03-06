@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author George Coomber and Michael Feist
  */
 
-public class AdSearchCallback implements Callback
+public class AdSearchCallback extends PageView
 {
 	public AdSearchCallback() {}
 	
@@ -22,87 +22,12 @@ public class AdSearchCallback implements Callback
 		String keywordInput = Menu.getKeyBoard();
 		String[] keywords = keywordInput.split(",");
 		
-		ArrayList<Ad> rows = getRows(keywords);
+		rows = getRows(keywords);
 		
-		boolean run = true;
-		int pageNumber = 1;
-		int i = 0;
-		while (run)
-		{
-			while (i < 5*pageNumber && i < rows.size())
-			{
-				System.out.println((i + 1) + ": " + rows.get(i).toString());
-				i++;
-			}
-			
-			System.out.println("\nSearch Result Options");
-			System.out.println("s: to select");
-			System.out.println("p: previous 5");
-			System.out.println("n: next 5");
-			System.out.println("q: to exit");
-			
-			String command = Menu.getKeyBoard();
-			
-			switch (command.toCharArray()[0])
-			{
-				case 's':
-					System.out.println("Enter the add number:");
-					String input = Menu.getKeyBoard();
-					
-					Integer adNumber = Integer.valueOf(input);
-					
-					if (adNumber == null)
-					{
-						System.out.println("Error: Not an Integer.");
-						return;
-					}
-					
-					int row = adNumber.intValue();
-					
-					if (row >= 1 && row <= rows.size())
-					{
-						getRowInfo(rows.get(row - 1).getAid());
-					}
-					
-					i = 5*(pageNumber - 1);
-					break;
-					
-				case 'p':
-					if (pageNumber > 1)
-					{
-						pageNumber--;
-						i = 5*(pageNumber - 1);
-					} else
-					{
-						i = 5*(pageNumber - 1);
-					}
-					break;
-					
-				case 'n':
-					if (i < rows.size())
-					{
-						i = 5*pageNumber;
-						pageNumber++;
-					} else
-					{
-						i = 5*(pageNumber - 1);
-					}
-					break;
-					
-				case 'q':
-					run = false;
-					break;
-					
-				default:
-					i = 5*(pageNumber - 1);
-					System.out.println("Error: Unknown command.");
-					break;
-			}
-			
-		}
+		pageView(5);
 	}
 	
-	public void getRowInfo(String aid)
+	public void getRowInfo(String id)
 	{
 
 		// Get connection to database
@@ -126,7 +51,7 @@ public class AdSearchCallback implements Callback
 					"a.descr, a.location, a.cat, AVG(r.rating) " +
 					"FROM ads a " +
 					"LEFT OUTER JOIN reviews r ON a.poster = r.reviewee " +
-					"WHERE trim(a.aid) like '" + aid + "' " +
+					"WHERE trim(a.aid) like '" + id + "' " +
 					"GROUP BY a.title, a.price, a.atype, a.pdate, " +
 					"a.descr, a.location, a.cat";
 
@@ -163,9 +88,9 @@ public class AdSearchCallback implements Callback
 		}
 	}
 	
-	public ArrayList<Ad> getRows(String[] keywords)
+	public ArrayList<DatabaseRow> getRows(String[] keywords)
 	{
-		ArrayList<Ad> rows = new ArrayList<Ad>();
+		ArrayList<DatabaseRow> rows = new ArrayList<DatabaseRow>();
 		
 		// Get connection to database
 		Connection m_con = Database.getInstance().getConnection();
@@ -225,12 +150,5 @@ public class AdSearchCallback implements Callback
 		}
 
 		return rows;
-	}
-	
-	
-	@Override
-	public int callback() {
-		view();
-		return Callback.OK;
 	}
 }

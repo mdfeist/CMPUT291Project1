@@ -1,6 +1,5 @@
 
-
-public class Ad
+public class Ad implements DatabaseRow
 {
 	private String _aid;
 	private String _title;
@@ -21,14 +20,14 @@ public class Ad
 		_date = date;
 	}
 	
-	public String getAid()
+	public String getID()
 	{
 	
 		return _aid;
 	}
 
 	
-	public void setAid(String aid)
+	public void setID(String aid)
 	{
 	
 		this._aid = aid;

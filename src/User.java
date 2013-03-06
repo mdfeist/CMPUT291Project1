@@ -15,6 +15,7 @@ public class User {
 
 	// Instance Variables
 	private String _email;
+	private String _lLogin;
 	private boolean _isValid;
 
 	private User() {
@@ -90,21 +91,31 @@ public class User {
 			stmt = m_con.createStatement();
 			
 			// Query
-			String query = "SELECT email, pass " + "FROM users "
+			String query = "SELECT email, pass, last_login " + "FROM users "
 					+ "WHERE trim(email) like '" + email + "'"
 					+ "AND trim(pass) like '" + password + "'";
 
 			ResultSet rs = stmt.executeQuery(query);
-
+			
 			if (rs.next()) {
 				String e = rs.getString(1).trim();
 				String p = rs.getString(2).trim();
+				
+				_lLogin = rs.getString(3);
+				
+				if (_lLogin != null)
+				{
+					_lLogin = _lLogin.trim();
+				}
 				
 				// Check if email and password are correct
 				if (e.equals(email) && p.equals(password)) {
 					userFound = true;
 				}
 			}
+			
+			rs.close();
+			stmt.close();
 
 			// Check if user was found
 			if (!userFound) {
@@ -112,12 +123,15 @@ public class User {
 			} else {
 				_isValid = true;
 				_email = email;
-
+				
+				stmt = m_con.createStatement();
+				stmt.executeUpdate("UPDATE users SET last_login = sysdate WHERE trim(email) like '" + email + "'");
+				stmt.close();
+				
 				System.out.println("You are logged in as " + email);
+				
+				listViews();
 			}
-
-			rs.close();
-			stmt.close();
 
 		} catch (SQLException e) {
 			System.err.println("SQLException: " + e.getMessage());
@@ -141,7 +155,7 @@ public class User {
 			stmt = m_con.createStatement();
 			
 			// Query
-			String query = "INSERT INTO users VALUES ('" + email + "','" + name + "','" + password +"',null)";
+			String query = "INSERT INTO users VALUES ('" + email + "','" + name + "','" + password +"', sysdate)";
 			
 			stmt.executeUpdate(query);
 			stmt.close();
@@ -156,6 +170,11 @@ public class User {
 			_isValid = true;
 			_email = email;
 		}
+	}
+	
+	public void listViews()
+	{
+		
 	}
 	
 	public void logout()

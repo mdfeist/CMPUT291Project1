@@ -3,13 +3,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 
-public class ListTest
-{
+public class TestConnection {
 
 	@Test
-	public void test()
-	{
-
+	public void test() {
 		fail("Not yet implemented");
 	}
 
