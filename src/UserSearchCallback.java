@@ -33,10 +33,11 @@ public class UserSearchCallback extends PageView
 			{
 				case 'e':
 					rows = searchEmail();
-					pageView(5);
 					break;
 				
 				case 'n':
+					rows = searchName();
+					pageView(5);
 					break;
 				
 				case 'q':
@@ -74,27 +75,38 @@ public class UserSearchCallback extends PageView
 		try
 		{
 			stmt = m_con.createStatement();
-
-			String query = "SELECT email, name, pass, last_login "
-					+ "FROM users" 
-					+ " WHERE trim(email) LIKE '%" + keyword.trim() + "%'";
+			
+			// Query the database and look for emails matching the keyword
+			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), AVG(r.rating)"
+					+ " From (users u LEFT OUTER JOIN ads a ON u.email = a.poster) LEFT OUTER JOIN reviews r ON r.reviewee = u.email" 
+					+ " WHERE trim(email) LIKE '" + keyword.trim() + "'"
+					+ " GROUP BY u.email, u.name, u.pass, u.last_login";
 			
 			ResultSet rs = stmt.executeQuery(query);
-
+			
 			while (rs.next())
 			{
 				UserData row = new UserData(
 						rs.getString(1).trim(),
 						rs.getString(2).trim(),
 						rs.getString(3),
-						rs.getString(4));
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6));
 
 				rows.add(row);
 			}
-
+			
 			rs.close();
 			stmt.close();
-
+			
+			// Print out the columns returned by the query (if any)
+			System.out.println("Row  Email  Name  Last_Login  Ad_Count  AVG_Rating");
+			if(rows.size() > 0)
+			{
+				System.out.println(rows.get(0).toString());
+			}
+			
 		} catch (SQLException e)
 		{
 			System.err.println("SQLException: " + e.getMessage());
@@ -103,9 +115,63 @@ public class UserSearchCallback extends PageView
 		return rows;
 	}
 	
+	// Query database using input name.
+	public ArrayList<DatabaseRow> searchName()
+	{
+		ArrayList<DatabaseRow> rows = new ArrayList<DatabaseRow>();
+		
+		System.out.println("Enter Name");
+		String keyword = Menu.getKeyBoard();
+		
+		// Get connection to database
+		Connection m_con = Database.getInstance().getConnection();
+
+		// Check connection
+		if (m_con == null)
+		{
+			System.out.println("Unable to Connect to Server");
+			return rows;
+		}
+
+		// Create Statement
+		Statement stmt;
+
+		try
+		{
+			stmt = m_con.createStatement();
+			
+			// Search for users with name like the keyword (case insensitive)
+			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), AVG(r.rating)"
+					+ " From (users u LEFT OUTER JOIN ads a ON u.email = a.poster) LEFT OUTER JOIN reviews r ON r.reviewee = u.email" 
+					+ " WHERE UPPER(trim(name)) LIKE '%" + keyword.toUpperCase().trim() + "%'"
+					+ " GROUP BY u.email, u.name, u.pass, u.last_login";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			while (rs.next())
+			{
+				UserData row = new UserData(
+						rs.getString(1).trim(),
+						rs.getString(2).trim());
+
+				rows.add(row);
+			}
+			
+			rs.close();
+			stmt.close();
+			
+		} catch (SQLException e)
+		{
+			System.err.println("SQLException: " + e.getMessage());
+		}
+
+		return rows;
+	}
+	
+	// The obtain column data for the row selected by the user.
 	public void getRowInfo(String id)
 	{
-		/*
+		
 		// Get connection to database
 		Connection m_con = Database.getInstance().getConnection();
 
@@ -122,34 +188,28 @@ public class UserSearchCallback extends PageView
 		try
 		{
 			stmt = m_con.createStatement();
-
-			String query = "SELECT a.title, a.price, a.atype, a.pdate, " +
-					"a.descr, a.location, a.cat, AVG(r.rating) " +
-					"FROM ads a " +
-					"LEFT OUTER JOIN reviews r ON a.poster = r.reviewee " +
-					"WHERE trim(a.aid) like '" + id + "' " +
-					"GROUP BY a.title, a.price, a.atype, a.pdate, " +
-					"a.descr, a.location, a.cat";
+			
+			// query the database for a user with email equal to id
+			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), AVG(r.rating)"
+					+ " From (users u LEFT OUTER JOIN ads a ON u.email = a.poster) LEFT OUTER JOIN reviews r ON r.reviewee = u.email" 
+					+ " WHERE trim(email) LIKE '" + id + "'"
+					+ " GROUP BY u.email, u.name, u.pass, u.last_login";
 
 			ResultSet rs = stmt.executeQuery(query);
 
+			// Print results to the screen
 			if (rs.next())
 			{
-				System.out.println("Title: " + rs.getString(1).trim());
-				System.out.println("Price: " + rs.getString(2).trim());
-				System.out.println("Type: " + rs.getString(3).trim());
-				System.out.println("Date: " + rs.getString(4).trim());
-				System.out.println("\nDescription:\n " + rs.getString(5).trim());
-				System.out.println("\n\nLocation: " + rs.getString(6).trim());
-				System.out.println("Category: " + rs.getString(7).trim());
+				System.out.println("Email: " + rs.getString(1));
+				System.out.println("Name: " + rs.getString(2));
+				System.out.println("Pass: " + rs.getString(3));
+				System.out.println("Last_Login: " + rs.getString(4));
+				System.out.println("Ad_Count " + rs.getString(5));
+				System.out.println("Avg_Rating: " + rs.getString(6));
 				
-				if (rs.getString(8) != null)
-				{
-					System.out.println("\nAverage Rating: " + rs.getString(8).trim());
-				}
 			} else
 			{
-				System.out.println("ERROR: Could not find ad.");
+				System.out.println("ERROR: Could not find user.");
 			}
 			
 			System.out.println("\nHit return to continue:\n\n");
@@ -161,7 +221,7 @@ public class UserSearchCallback extends PageView
 		} catch (SQLException e)
 		{
 			System.err.println("SQLException: " + e.getMessage());
-		}*/
+		}
 	}
 	
 	@Override
