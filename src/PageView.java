@@ -46,12 +46,14 @@ abstract public class PageView implements Callback
 					System.out.println("Enter the row number:");
 					String input = Menu.getKeyBoard();
 					
-					Integer adNumber = Integer.valueOf(input);
+					Integer adNumber = null;
 					
-					if (adNumber == null)
+					try
 					{
+						adNumber = new Integer(input);
+					} catch (Exception e) {
 						System.out.println("Error: Not an Integer.");
-						return;
+						break;
 					}
 					
 					int row = adNumber.intValue();
