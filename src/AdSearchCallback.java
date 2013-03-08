@@ -134,7 +134,7 @@ public class AdSearchCallback extends PageView
 
 			while (rs.next())
 			{
-				Ad row = new Ad(
+				SearchAd row = new SearchAd(
 						rs.getString(1).trim(),
 						rs.getString(2).trim(),
 						rs.getString(3).trim(),
