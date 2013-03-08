@@ -14,25 +14,35 @@ import java.util.ArrayList;
 
 abstract public class PageView implements Callback
 {
-	ArrayList<DatabaseRow> rows;
+	protected ArrayList<DatabaseRow> rows = null;
+	protected String pageTitle = null;
 	
 	abstract public void view();
 	abstract public void getRowInfo(String id);
 	
 	public void pageView(int pageSize)
 	{
+		if (rows == null)
+		{
+			System.out.println("\nERROR: No rows in view.");
+			return;
+		}
+		
 		boolean run = true;
 		int pageNumber = 1;
 		int i = 0;
 		while (run)
 		{
+			if (pageTitle != null)
+				System.out.println(pageTitle);
+			
 			while (i < pageSize*pageNumber && i < rows.size())
 			{
 				System.out.println((i + 1) + ": " + rows.get(i).toString());
 				i++;
 			}
 			
-			System.out.println("\nSearch Result Options");
+			System.out.println("\nResult Options");
 			System.out.println("s: to select");
 			System.out.println("p: previous page");
 			System.out.println("n: next page");

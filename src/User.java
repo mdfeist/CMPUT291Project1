@@ -130,7 +130,8 @@ public class User {
 				
 				System.out.println("You are logged in as " + email);
 				
-				listViews();
+				LoginReviewCallback review = new LoginReviewCallback();
+				review.view();
 			}
 
 		} catch (SQLException e) {
@@ -172,11 +173,6 @@ public class User {
 		}
 	}
 	
-	public void listViews()
-	{
-		
-	}
-	
 	public void logout()
 	{
 		_isValid = false;
@@ -197,5 +193,9 @@ public class User {
 
 	public String getEmail() {
 		return _email;
+	}
+	
+	public String getLoginDate() {
+		return _lLogin;
 	}
 }

@@ -1,3 +1,8 @@
+/**
+ * Holds data for an Ad
+ * 
+ * @author Michael Feist
+ */
 
 public class Ad implements DatabaseRow
 {
