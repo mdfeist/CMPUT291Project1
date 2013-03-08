@@ -1,4 +1,8 @@
-
+/**
+ * Holds data for a user from the users table.
+ * 
+ * @author George Coomber
+ */
 public class UserData implements DatabaseRow
 {
 	private String _email;
