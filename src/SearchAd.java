@@ -1,5 +1,5 @@
 /**
- * Holds data for an Ad
+ * Holds data for an Ad when user searches for ads
  * 
  * @author Michael Feist
  */
