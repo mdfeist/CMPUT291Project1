@@ -211,17 +211,92 @@ public class UserSearchCallback extends PageView
 			{
 				System.out.println("ERROR: Could not find user.");
 			}
-			
-			System.out.println("\nHit return to continue:\n\n");
-			Menu.getKeyBoard();
 
 			rs.close();
 			stmt.close();
-
+			
+			boolean run = true;
+			
+			while(run)
+			{
+				// The user can list review texts or write a review.
+				System.out.println("\nOptions");
+				System.out.println("l: list review texts");
+				System.out.println("w: write a review for the user");
+				System.out.println("q: to exit");
+				
+				String command = Menu.getKeyBoard();
+				
+				switch (command.toCharArray()[0])
+				{
+					case 'l':
+						//rows = searchEmail();
+						break;
+					
+					case 'w':
+						//rows = searchName();
+						break;
+					
+					case 'q':
+						run = false;
+						break;
+						
+					default:
+						System.out.println("Error: Unknown command.");
+						break;
+				}
+			}
+			
 		} catch (SQLException e)
 		{
 			System.err.println("SQLException: " + e.getMessage());
 		}
+	}
+	
+	// Query the Database for all 
+	public ArrayList<String> getReviewTexts(String id) {
+		ArrayList<String> reviewTexts = new ArrayList<String>();
+		String text;
+		
+		// Get connection to database
+		Connection m_con = Database.getInstance().getConnection();
+
+		// Check connection
+		if (m_con == null)
+		{
+			System.out.println("Unable to Connect to Server");
+			return reviewTexts;
+		}
+
+		// Create Statement
+		Statement stmt;
+
+		try
+		{
+			stmt = m_con.createStatement();
+			
+			// Search for users with name like the keyword (case insensitive)
+			String query = "Select text"
+					+ " From reviews" 
+					+ " WHERE UPPER(trim(reviewee)) LIKE '" + id.toUpperCase().trim() + "'";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			while (rs.next())
+			{
+				text = rs.getString(1).trim();
+				reviewTexts.add(text);
+			}
+			
+			rs.close();
+			stmt.close();
+			
+		} catch (SQLException e)
+		{
+			System.err.println("SQLException: " + e.getMessage());
+		}
+
+		return reviewTexts;
 	}
 	
 	@Override
