@@ -13,7 +13,10 @@ import java.util.ArrayList;
 
 public class AdSearchCallback extends PageView
 {
-	public AdSearchCallback() {}
+	public AdSearchCallback() 
+	{
+		pageTitle = "Search Results";
+	}
 	
 	public void view()
 	{
@@ -120,8 +123,8 @@ public class AdSearchCallback extends PageView
 				else
 					query += " OR ";
 
-				query += "trim(title) like '%" + key.trim() + "%'"
-						+ " OR trim(descr) like '%" + key.trim() + "%'";
+				query += "lower(trim(title)) like '%" + key.trim().toLowerCase() + "%'"
+						+ " OR lower(trim(descr)) like '%" + key.trim().toLowerCase() + "%'";
 				i++;
 			}
 

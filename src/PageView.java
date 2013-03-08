@@ -42,7 +42,7 @@ abstract public class PageView implements Callback
 				i++;
 			}
 			
-			System.out.println("\nResult Options");
+			System.out.println("\nOptions");
 			System.out.println("s: to select");
 			System.out.println("p: previous page");
 			System.out.println("n: next page");
