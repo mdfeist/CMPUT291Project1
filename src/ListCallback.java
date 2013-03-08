@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * This is where the user can list the ads
  * they have written.
  * 
- * @author George Coomber and Michael Feist
+ * @author Michael Feist
  */
 
 public class ListCallback extends PageView
@@ -56,25 +56,18 @@ public class ListCallback extends PageView
 				return null;
 			}
 			
-			String query = "SELECT rno, rating, text, rdate " +
-					"FROM reviews " +
-					"WHERE trunc(rdate) >= TO_DATE('" + 
-					date.substring(0, date.length() - 2) + 
-					"', 'yyyy-mm-dd hh24:mi:ss') " +
-					"AND reviewee = '" +
-					User.getInstance().getEmail() +
-					"' " +
-					"ORDER BY rdate DESC";
+			String query = "SELECT aid, title, atype, price, pdate FROM ads";
 			
 			ResultSet rs = stmt.executeQuery(query);
 
 			while (rs.next())
 			{
-				Review row = new Review(
+				UserAd row = new UserAd(
 						rs.getString(1).trim(),
-						rs.getFloat(2),
+						rs.getString(2).trim(),
 						rs.getString(3).trim(),
-						rs.getString(4).trim());
+						rs.getString(4).trim(),
+						rs.getString(5).trim());
 
 				rows.add(row);
 			}
