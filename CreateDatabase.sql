@@ -12,18 +12,19 @@ create table categories (
   foreign key (supercat) references categories
 );
 create table users (
-  email		char(25),
-  name		char(25),
-  pass		char(25),
+  email		char(20),
+  name		char(20),
+  pass		char(4),
   last_login	date,
   primary key (email)
 );
 create table reviews (
   rno		int,
   rating	int, 
-  text		char(30),
-  reviewer	char(25),
-  reviewee	char(25),
+  text		char(80),
+  reviewer	char(20),
+  reviewee	char(20),
+  rdate		date,
   primary key (rno),
   foreign key (reviewer) references users,
   foreign key (reviewee) references users
@@ -44,7 +45,7 @@ create table ads (
   location	char(15),
   pdate		date,
   cat		char(10),
-  poster	char(25),
+  poster	char(20),
   primary key (aid),
   foreign key (cat) references categories,
   foreign key (poster) references users
@@ -58,6 +59,7 @@ create table purchases (
   foreign key (aid) references ads,
   foreign key (ono) references offers
 );
+
 insert into categories values ('buy/sell', null);
 insert into categories values ('services', null);
 insert into categories values ('tickets', 'buy/sell');
@@ -65,17 +67,18 @@ insert into categories values ('sports', 'buy/sell');
 insert into categories values ('cameras', 'buy/sell');
 insert into categories values ('computer', 'services');
 
-insert into users values ('joe@ujiji.com','Joe Plumber', 'test', null);
-insert into users values ('bob@ujiji.com','Bob Carpenter', 'test', null);
-insert into users values ('davood@ujiji.com','Davood Teacher', 'test', null);
-insert into users values ('adam@sport.com','Adam Fan', 'test', null);
+insert into users values ('joe@ujiji.com','Joe Plumber','test',null);
+insert into users values ('bob@ujiji.com','Bob Carpenter','test',null);
+insert into users values ('davood@ujiji.com','Davood Teacher','test', null);
+insert into users values ('adam@sport.com','Adam Fan','test',null);
+insert into users values ('mike@ujiji.com','Mike Student','test',null);
 
-insert into reviews values (1,5,'good seller, very positive exp' , 'joe@ujiji.com', 'bob@ujiji.com');
-insert into reviews values (2,2,'very bad exp' , 'davood@ujiji.com', 'bob@ujiji.com');
-insert into reviews values (3,5,'good seller, very positive exp' , 'davood@ujiji.com', 'joe@ujiji.com');
-insert into reviews values (4,4,'very positive exp' , 'bob@ujiji.com', 'joe@ujiji.com');
-insert into reviews values (5,5,'good' , 'adam@sport.com', 'joe@ujiji.com');
-insert into reviews values (6,5,'good' , 'bob@ujiji.com', 'adam@sport.com');
+insert into reviews values (1,5,'good seller, very positive exp' , 'joe@ujiji.com', 'bob@ujiji.com', sysdate);
+insert into reviews values (2,2,'very bad exp' , 'davood@ujiji.com', 'bob@ujiji.com', sysdate);
+insert into reviews values (3,5,'good seller, very positive exp' , 'davood@ujiji.com', 'joe@ujiji.com', sysdate);
+insert into reviews values (4,4,'very positive exp' , 'bob@ujiji.com', 'joe@ujiji.com', sysdate);
+insert into reviews values (5,5,'good' , 'adam@sport.com', 'joe@ujiji.com', sysdate);
+insert into reviews values (6,5,'good' , 'bob@ujiji.com', 'adam@sport.com', sysdate);
 
 insert into offers values (1,3,5);
 insert into offers values (2,7,10);
