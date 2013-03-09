@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 /**
  * This is where the user can query the database
@@ -20,6 +19,7 @@ public class UserSearchCallback extends PageView
 {
 	public UserSearchCallback() {}
 	
+	// Prompts the user for input for menu choices
 	public void view()
 	{	
 		boolean run = true;
@@ -332,7 +332,7 @@ public class UserSearchCallback extends PageView
 		
 		// Boolean to check if the  user has entered an int for rating
 		boolean isInt = false;
-		// Boolean to check if the  rating is between 0 and 5
+		// Boolean to check if the  rating is between 1 and 5
 		boolean isValid = false;
 		
 		Date date = new Date();
@@ -343,12 +343,12 @@ public class UserSearchCallback extends PageView
 		
 		System.out.println("New Review:");
 		
-		// Prompt the user for an int rating between 0 and 5
+		// Prompt the user for an int rating between 1 and 5
 		while (isInt == false || isValid == false)
 		{
 			isInt = false;
 			isValid = false;
-			System.out.println("Enter a rating between 0 and 5:");
+			System.out.println("Enter a rating between 1 and 5:");
 			
 			String input = Menu.getKeyBoard();
 			
@@ -366,8 +366,8 @@ public class UserSearchCallback extends PageView
 			
 			isInt = true;
 			
-			// If the input is an int, check if between 0 and 5
-			if( rating >= 0 && rating <= 5 )
+			// If the input is an int, check if between 1 and 5
+			if( rating >= 1 && rating <= 5 )
 			{
 				isValid = true;
 			}
@@ -375,7 +375,7 @@ public class UserSearchCallback extends PageView
 			// Print error messages if the input is not in bounds
 			if( !isValid )
 			{
-				System.out.println("Invalid input: Rating must be between 0 and 5 inclusive");
+				System.out.println("Invalid input: Rating must be between 1 and 5 inclusive");
 				System.out.println("Please try again");
 			}
 		}
@@ -384,12 +384,6 @@ public class UserSearchCallback extends PageView
 		System.out.println("Please enter review text:");
 		String inputText = Menu.getKeyBoard();
 		reviewText = inputText.trim();
-		
-		System.out.println(rno);
-		System.out.println(String.valueOf(rating));
-		System.out.println(reviewText);
-		System.out.println(email);
-		System.out.println(id);
 		
 		// Get connection to database
 		Connection m_con = Database.getInstance().getConnection();
