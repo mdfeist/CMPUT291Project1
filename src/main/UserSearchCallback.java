@@ -4,6 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * This is where the user can query the database
@@ -102,10 +106,13 @@ public class UserSearchCallback extends PageView
 			stmt.close();
 			
 			// Print out the columns returned by the query (if any)
-			System.out.println("Row  Email  Name  Last_Login  Ad_Count  AVG_Rating");
 			if(rows.size() > 0)
 			{
+				System.out.println("Row  Email  Name  Last_Login  Ad_Count  AVG_Rating");
 				System.out.println(rows.get(0).toString());
+			}
+			else {
+				System.out.println("No users exist matching that email");
 			}
 			
 		} catch (SQLException e)
@@ -231,11 +238,11 @@ public class UserSearchCallback extends PageView
 				switch (command.toCharArray()[0])
 				{
 					case 'l':
-						//rows = searchEmail();
+						showReviewTexts(id);
 						break;
 					
 					case 'w':
-						//rows = searchName();
+						writeReview(id);
 						break;
 					
 					case 'q':
@@ -254,8 +261,8 @@ public class UserSearchCallback extends PageView
 		}
 	}
 	
-	// Query the Database for all 
-	public ArrayList<String> getReviewTexts(String id) {
+	// Query the Database for the texts from all the reviews reviewing the user with id
+	public void showReviewTexts(String id) {
 		ArrayList<String> reviewTexts = new ArrayList<String>();
 		String text;
 		
@@ -266,7 +273,7 @@ public class UserSearchCallback extends PageView
 		if (m_con == null)
 		{
 			System.out.println("Unable to Connect to Server");
-			return reviewTexts;
+			return;
 		}
 
 		// Create Statement
@@ -297,7 +304,167 @@ public class UserSearchCallback extends PageView
 			System.err.println("SQLException: " + e.getMessage());
 		}
 
-		return reviewTexts;
+		if( reviewTexts.size() > 0 )
+		{
+			for( String rText : reviewTexts)
+			{
+				System.out.println(rText);
+			}
+		}
+		else {
+			System.out.println("User currently has no reviews");
+		}
+		
+		System.out.println("\nPress enter to continue");
+		Menu.getKeyBoard();
+	}
+	
+	// Allows the user to write a review for the user with email id
+	public void writeReview(String id) {
+		// Create a new rno for the review
+		String rno = createNewRno();
+		int rating = -1;
+		String reviewText = "";
+		
+		// Get reviewer email
+		User user = User.getInstance();
+		String email = user.getEmail();
+		
+		// Boolean to check if the  user has entered an int for rating
+		boolean isInt = false;
+		// Boolean to check if the  rating is between 0 and 5
+		boolean isValid = false;
+		
+		Date date = new Date();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy");
+		
+		// Find the system date in dd/MM/yyyy format
+		String sysdate = dateFormat.format(date);
+		
+		System.out.println("New Review:");
+		
+		// Prompt the user for an int rating between 0 and 5
+		while (isInt == false || isValid == false)
+		{
+			isInt = false;
+			isValid = false;
+			System.out.println("Enter a rating between 0 and 5:");
+			
+			String input = Menu.getKeyBoard();
+			
+			// Check if the input is an integer
+			try
+			{
+				rating = Integer.parseInt(input);
+			} catch (NumberFormatException e)
+			{
+				// Print error message to user
+				System.out.println("Invalid input: Rating must be an interger value");
+				System.out.println("Please try again");
+				continue;
+			}
+			
+			isInt = true;
+			
+			// If the input is an int, check if between 0 and 5
+			if( rating >= 0 && rating <= 5 )
+			{
+				isValid = true;
+			}
+			
+			// Print error messages if the input is not in bounds
+			if( !isValid )
+			{
+				System.out.println("Invalid input: Rating must be between 0 and 5 inclusive");
+				System.out.println("Please try again");
+			}
+		}
+		
+		// Prompt the user for review text.
+		System.out.println("Please enter review text:");
+		String inputText = Menu.getKeyBoard();
+		reviewText = inputText.trim();
+		
+		System.out.println(rno);
+		System.out.println(String.valueOf(rating));
+		System.out.println(reviewText);
+		System.out.println(email);
+		System.out.println(id);
+		
+		// Get connection to database
+		Connection m_con = Database.getInstance().getConnection();
+
+		// Check connection
+		if (m_con == null) {
+			System.out.println("Unable to Connect to Server");
+			return;
+		}
+
+		// Create Statement
+		Statement stmt;
+
+		try {
+			stmt = m_con.createStatement();
+			
+			// Write the review to the database in the reviews table
+			String query = "INSERT INTO reviews VALUES ('" + rno + "','"
+					+ String.valueOf(rating) + "','" + reviewText + "','"
+					+ email + "','" + id + "','" + sysdate + "')";
+			
+			stmt.executeUpdate(query);
+			stmt.close();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException: " + e.getMessage());
+		}
+		
+	}
+	
+	// Creates a new review number for the newly written review
+	public String createNewRno() {
+		String newRno = "1";
+		int intRno = 0;
+		
+		// Get connection to database
+		Connection m_con = Database.getInstance().getConnection();
+
+		// Check connection
+		if (m_con == null)
+		{
+			System.out.println("Unable to Connect to Server");
+			return "";
+		}
+
+		// Create Statement
+		Statement stmt;
+
+		try
+		{
+			stmt = m_con.createStatement();
+			
+			// Search for users with name like the keyword (case insensitive)
+			String query = "Select MAX(rno)"
+					+ " From reviews";
+			
+			ResultSet rs = stmt.executeQuery(query);
+			
+			// If the result set is not empty (there is at least one review)
+			// set the new rno to he max rno plus 1
+			if (rs.next())
+			{
+				intRno = Integer.parseInt(rs.getString(1).trim()) + 1;
+				newRno = String.valueOf(intRno);
+			}
+			
+			rs.close();
+			stmt.close();
+			
+		} catch (SQLException e)
+		{
+			System.err.println("SQLException: " + e.getMessage());
+		}
+		
+		return newRno;
 	}
 	
 	@Override
