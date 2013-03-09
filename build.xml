@@ -1,0 +1,57 @@
+<project default="build">
+	<property name="src.dir"     value="src/main"/>
+
+    <property name="build.dir"   value="build"/>
+    <property name="classes.dir" value="${build.dir}/bin"/>
+    <property name="jar.dir"     value="${build.dir}"/>
+
+	<property name="oracle.lib.dir" value="/oracle/jdbc/lib"/>
+
+	 <property name="main-class"  value="main.Main"/>
+
+	<target name="clean">
+		<delete file="runScript.sh"/>
+        <delete dir="${build.dir}"/>
+    </target>
+
+  <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+    </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${jar.dir}"/>
+		<input
+			message="Enter your user name for the database: "
+			addproperty="db.user"
+	 	 />
+
+		<input message="password:" addproperty="db.password">
+    		<handler classname="org.apache.tools.ant.input.SecureInputHandler" />
+		</input>
+
+		<echo file="${jar.dir}/config.properties">
+dbuser=${db.user}
+dbpassword=${db.password}
+		</echo>
+
+        <jar destfile="${jar.dir}/Project.jar" basedir="${classes.dir}" update="true">
+			<zipgroupfileset dir="${oracle.lib.dir}" includes="ojdbc6.jar"/>
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+			<mappedresources>
+				<fileset dir="${jar.dir}" includes="*.properties"/>
+			</mappedresources>
+        </jar>
+
+		<delete file="${jar.dir}/config.properties"/>
+  </target>
+
+  <target name="build" depends="compile,jar">
+		<echo file="runScript.sh">
+			java -jar build/Project.jar
+		</echo>
+	</target>
+
+</project>
