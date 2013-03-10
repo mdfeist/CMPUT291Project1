@@ -4,15 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 /**
  * This is where the user can query the database
  * for users.
  * 
- * @author George Coomber
+ * @author George Coomber and minor bug fix by Michael Feist
  */
 
 public class UserSearchCallback extends PageView
