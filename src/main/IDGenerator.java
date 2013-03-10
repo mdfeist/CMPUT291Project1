@@ -1,5 +1,12 @@
 package main;
 
+/**
+ * Creates a new key id for the database.
+ * 
+ * @author Michael Feist
+ *
+ */
+
 public class IDGenerator {
 	
 	public static char[] characters = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',

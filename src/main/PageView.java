@@ -29,6 +29,10 @@ abstract public class PageView implements Callback
 	public void printCustomOptions() {}
 	public boolean doCustomOptions() { return false; }
 	
+	public ArrayList<DatabaseRow> getRows() { return null; }
+	
+	public void update() { rows = getRows(); }
+	
 	public void printOptions()
 	{
 		System.out.println("\nOptions");
@@ -111,17 +115,17 @@ abstract public class PageView implements Callback
 	{
 		pageSize = size;
 		
-		if (rows == null)
-		{
-			System.out.println("\nERROR: No rows in view.");
-			return;
-		}
-		
 		run = true;
 		pageNumber = 1;
 		elementIndex = 0;
 		while (run)
 		{
+			if (rows == null)
+			{
+				System.out.println("\nERROR: No rows in view.");
+				return;
+			}
+			
 			if (pageTitle != null)
 				System.out.println(pageTitle);
 			
