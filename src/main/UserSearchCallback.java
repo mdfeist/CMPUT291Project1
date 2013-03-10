@@ -87,7 +87,7 @@ public class UserSearchCallback extends PageView
 			stmt = m_con.createStatement();
 			
 			// Query the database and look for emails matching the keyword
-			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), AVG(r.rating)"
+			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), round(AVG(r.rating), 2)"
 					+ " From (users u LEFT OUTER JOIN ads a ON u.email = a.poster) LEFT OUTER JOIN reviews r ON r.reviewee = u.email" 
 					+ " WHERE trim(email) LIKE '" + keyword.trim() + "'"
 					+ " GROUP BY u.email, u.name, u.pass, u.last_login";
@@ -113,8 +113,11 @@ public class UserSearchCallback extends PageView
 			// Print out the columns returned by the query (if any)
 			if(rows.size() > 0)
 			{
-				System.out.println("Row  Email  Name  Last_Login  Ad_Count  AVG_Rating");
-				System.out.println(rows.get(0).toString());
+				String format = String.format("Row %1$21s %2$21s %3$10s %4$10s",
+						"Email", "Name", "Ad_Count", "AVG_Rating");
+				
+				System.out.println(format);
+				System.out.println("1   " + rows.get(0).toString());
 			}
 			else {
 				System.out.println("No users exist matching that email");
@@ -154,7 +157,7 @@ public class UserSearchCallback extends PageView
 			stmt = m_con.createStatement();
 			
 			// Search for users with name like the keyword (case insensitive)
-			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), AVG(r.rating)"
+			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), round(AVG(r.rating), 2)"
 					+ " From (users u LEFT OUTER JOIN ads a ON u.email = a.poster) LEFT OUTER JOIN reviews r ON r.reviewee = u.email" 
 					+ " WHERE UPPER(trim(name)) LIKE '%" + keyword.toUpperCase().trim() + "%'"
 					+ " GROUP BY u.email, u.name, u.pass, u.last_login";
@@ -203,7 +206,7 @@ public class UserSearchCallback extends PageView
 			stmt = m_con.createStatement();
 			
 			// query the database for a user with email equal to id
-			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), AVG(r.rating)"
+			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), round(AVG(r.rating), 2)"
 					+ " From (users u LEFT OUTER JOIN ads a ON u.email = a.poster) LEFT OUTER JOIN reviews r ON r.reviewee = u.email" 
 					+ " WHERE trim(email) LIKE '" + id + "'"
 					+ " GROUP BY u.email, u.name, u.pass, u.last_login";

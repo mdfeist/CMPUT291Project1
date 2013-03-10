@@ -27,7 +27,7 @@ public class ListCallback extends PageView
 	
 	public void getRowInfo(String id)
 	{
-		System.out.println("\nOptions");
+		System.out.println("\nOptions for ad " + id);
 		System.out.println("r: to remove ad");
 		System.out.println("q: to cancel");
 

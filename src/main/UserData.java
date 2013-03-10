@@ -115,12 +115,12 @@ public class UserData implements DatabaseRow
 	public String toString()
 	{
 		if (_isSmall == false){
-			String format = "%1$s %2$s %3$s %4$s %5$s %6$s";
-			return String.format(format, _email, _name, _pass, _last_login, _ad_count, _avg_rating);
+			String format = "%1$21s %2$21s %3$10s %4$10s";
+			return String.format(format, _email, _name, _ad_count, _avg_rating);
 		}
 		else
 		{
-			String format = "%1$s %2$s";
+			String format = "%1$21s\t%2$s";
 			return String.format(format, _email, _name);
 		}
 	}
