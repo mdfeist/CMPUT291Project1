@@ -399,6 +399,9 @@ public class UserSearchCallback extends PageView
 		String inputText = Menu.getKeyBoard();
 		reviewText = inputText.trim();
 		
+		if( reviewText.length() > 80)
+			reviewText = reviewText.substring(0, 79);
+		
 		// Get connection to database
 		Connection m_con = Database.getInstance().getConnection();
 
