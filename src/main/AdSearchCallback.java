@@ -52,7 +52,7 @@ public class AdSearchCallback extends PageView
 			stmt = m_con.createStatement();
 
 			String query = "SELECT a.title, a.price, a.atype, a.pdate, " +
-					"a.descr, a.location, a.cat, AVG(r.rating) " +
+					"a.descr, a.location, a.cat, round(AVG(r.rating), 2) " +
 					"FROM ads a " +
 					"LEFT OUTER JOIN reviews r ON a.poster = r.reviewee " +
 					"WHERE trim(a.aid) like '" + id + "' " +
