@@ -29,6 +29,7 @@ public class ListCallback extends PageView
 	{
 		System.out.println("\nOptions for ad " + id);
 		System.out.println("r: to remove ad");
+		System.out.println("p: to add promotion");
 		System.out.println("q: to cancel");
 
 		String command = Menu.getKeyBoard();
@@ -51,6 +52,14 @@ public class ListCallback extends PageView
 			} else {
 				System.out.println("Not removing ad.");
 			}
+			break;
+		
+		case 'p':
+			addPromo(id);
+			update();
+			break;
+			
+		case 'q':
 			break;
 
 		default:
@@ -95,6 +104,12 @@ public class ListCallback extends PageView
 		} catch (SQLException e) {
 			System.err.println("SQLException: " + e.getMessage());
 		}
+	}
+	
+	private void addPromo(String id)
+	{
+		AddPromoCallback promo = new AddPromoCallback(id);
+		promo.view();
 	}
 	
 	public ArrayList<DatabaseRow> getRows()

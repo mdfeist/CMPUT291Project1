@@ -28,6 +28,7 @@ abstract public class PageView implements Callback
 	
 	public void printCustomOptions() {}
 	public boolean doCustomOptions() { return false; }
+	public void doCustomFinish() { }
 	
 	public ArrayList<DatabaseRow> getRows() { return null; }
 	
@@ -109,6 +110,8 @@ abstract public class PageView implements Callback
 			elementIndex = pageSize*(pageNumber - 1);
 			System.out.println("Error: Unknown command.");
 		}
+		
+		doCustomFinish();
 	}
 	
 	public void pageView(int size)
