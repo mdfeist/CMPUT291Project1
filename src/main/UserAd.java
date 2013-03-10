@@ -10,20 +10,26 @@ public class UserAd implements DatabaseRow
 	private String _aid;
 	private String _title;
 	private String _type;
-	private String _price;
+	private float _price;
 	private String _date;
+	private String _hasPromos;
+	private int _daysLeft;
 	
 	public  UserAd(String aid,
 			String title,
 			String type,
-			String price,
-			String date)
+			float price,
+			String date,
+			String promos,
+			int daysLeft)
 	{
 		_aid = aid;
 		_title = title;
 		_type = type;
 		_price = price;
 		_date = date;
+		_hasPromos = promos;
+		_daysLeft = daysLeft;
 	}
 	
 	public String getID()
@@ -68,14 +74,14 @@ public class UserAd implements DatabaseRow
 	}
 
 	
-	public String getPrice()
+	public float getPrice()
 	{
 	
 		return _price;
 	}
 
 	
-	public void setPrice(String price)
+	public void setPrice(float price)
 	{
 	
 		this._price = price;
@@ -97,7 +103,7 @@ public class UserAd implements DatabaseRow
 	
 	public String toString()
 	{
-		String format = "%1$20s %2$s %3$s %4$s";
-		return String.format(format, _title, _price, _date, _type);
+		String format = "%1$20s %2$10.2f %3$s %4$s %5$3s %6$d";
+		return String.format(format, _title, _price, _date, _type, _hasPromos, _daysLeft);
 	}
 }

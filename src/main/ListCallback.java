@@ -51,13 +51,18 @@ public class ListCallback extends PageView
 		{
 			stmt = m_con.createStatement();
 			
-			String date = User.getInstance().getLoginDate();
-			if (date == null)
-			{
-				return null;
-			}
-			
-			String query = "SELECT aid, title, atype, price, pdate FROM ads";
+			String query = "SELECT a.aid, a.title, a.atype, a.price, a.pdate, " +
+					"(CASE WHEN p.ono is NOT NULL " +
+					"THEN 'Yes' " +
+					"ELSE 'No' " +
+					"END) as Purchases, " +
+					"(CASE WHEN ((TO_DATE(p.start_date) + o.ndays) - SYSDATE) > 0 " +
+					"THEN CEIL(((TO_DATE(p.start_date) + o.ndays) - SYSDATE)) " +
+					"ELSE 0 END) as daysLeft " +
+					"FROM ads a " +
+					"LEFT OUTER JOIN purchases p ON a.aid = p.aid " +
+					"LEFT OUTER JOIN offers o ON p.ono = o.ono " +
+					"WHERE trim(a.poster) = '" + User.getInstance().getEmail() + "'";
 			
 			ResultSet rs = stmt.executeQuery(query);
 
@@ -67,8 +72,10 @@ public class ListCallback extends PageView
 						rs.getString(1).trim(),
 						rs.getString(2).trim(),
 						rs.getString(3).trim(),
-						rs.getString(4).trim(),
-						rs.getString(5).trim());
+						rs.getFloat(4),
+						rs.getString(5).trim(),
+						rs.getString(6).trim(),
+						rs.getInt(7));
 
 				rows.add(row);
 			}
