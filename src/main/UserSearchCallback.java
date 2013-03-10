@@ -58,7 +58,10 @@ public class UserSearchCallback extends PageView
 		}
 	}
 	
-	// Query database using input email.
+	/**
+	 * Query database using input email to find users.
+	 * @return
+	 */
 	public ArrayList<DatabaseRow> searchEmail()
 	{
 		ArrayList<DatabaseRow> rows = new ArrayList<DatabaseRow>();
@@ -128,7 +131,10 @@ public class UserSearchCallback extends PageView
 		return rows;
 	}
 	
-	// Query database using input name.
+	/**
+	 *  Query database using input name to find users.
+	 * @return
+	 */
 	public ArrayList<DatabaseRow> searchName()
 	{
 		ArrayList<DatabaseRow> rows = new ArrayList<DatabaseRow>();
@@ -272,7 +278,10 @@ public class UserSearchCallback extends PageView
 		}
 	}
 	
-	// Query the Database for the texts from all the reviews reviewing the user with id
+	/**
+	 * Query the Database for the texts from all the reviews reviewing the user with id.
+	 * @param id
+	 */
 	public void showReviewTexts(String id) {
 		ArrayList<String> reviewTexts = new ArrayList<String>();
 		String text;
@@ -330,7 +339,10 @@ public class UserSearchCallback extends PageView
 		Menu.getKeyBoard();
 	}
 	
-	// Allows the user to write a review for the user with email id
+	/**
+	 * Allows the user to write a review for the user with email id.
+	 * @param id
+	 */
 	public void writeReview(String id) {
 		// Create a new rno for the review
 		String rno = createNewRno();
@@ -390,6 +402,9 @@ public class UserSearchCallback extends PageView
 		String inputText = Menu.getKeyBoard();
 		reviewText = inputText.trim();
 		
+		if( reviewText.length() > 80)
+			reviewText = reviewText.substring(0, 79);
+		
 		// Get connection to database
 		Connection m_con = Database.getInstance().getConnection();
 
@@ -419,7 +434,10 @@ public class UserSearchCallback extends PageView
 		
 	}
 	
-	// Creates a new review number for the newly written review
+	/**
+	 *  Creates a new review number for the newly written review.
+	 * @return
+	 */
 	public String createNewRno() {
 		String newRno = "1";
 		int intRno = 0;

@@ -1,6 +1,6 @@
 package main;
 /**
- * Holds data for an Ad when user lists their ads
+ * Holds data for an ad when user lists their ads.
  * 
  * @author Michael Feist
  */

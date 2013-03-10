@@ -1,5 +1,10 @@
 package main;
 
+/**
+ * Holds row information for an offer from the Offers table.
+ * @author Michael Feist
+ *
+ */
 public class Offer implements DatabaseRow {
 
 	private int _ono;

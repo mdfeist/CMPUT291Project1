@@ -23,15 +23,42 @@ abstract public class PageView implements Callback
 	protected int elementIndex;
 	protected int pageSize;
 	
+	/**
+	 * Needs to be implemented. Initial view of page.
+	 */
 	abstract public void view();
+	/**
+	 * Needs to be implemented. Displays information of a row.
+	 * @param id
+	 */
 	abstract public void getRowInfo(String id);
 	
+	/**
+	 * Can be overwritten to add custom options.
+	 */
 	public void printCustomOptions() {}
+	
+	/**
+	 * Can be overwritten to return custom options.
+	 * @return
+	 */
 	public boolean doCustomOptions() { return false; }
+	
+	/**
+	 * Can be overwritten to handle custom end statement. 
+	 * Called at the end of the PageView loop.
+	 */
 	public void doCustomFinish() { }
 	
+	/**
+	 * Needs to be implemented to get all rows.
+	 * @return rows from database
+	 */
 	public ArrayList<DatabaseRow> getRows() { return null; }
 	
+	/**
+	 * To be called if data in database is changed.
+	 */
 	public void update() { rows = getRows(); }
 	
 	public void printOptions()
@@ -44,6 +71,9 @@ abstract public class PageView implements Callback
 		System.out.println("q: to exit");
 	}
 	
+	/**
+	 * Users can select a row from the rows array.
+	 */
 	protected void selectCommand()
 	{
 		System.out.println("Enter the row number:");
@@ -69,6 +99,9 @@ abstract public class PageView implements Callback
 		elementIndex = pageSize*(pageNumber - 1);
 	}
 	
+	/**
+	 * Shows the previous page of rows.
+	 */
 	protected void prevCommand()
 	{
 		if (pageNumber > 1)
@@ -81,6 +114,9 @@ abstract public class PageView implements Callback
 		}
 	}
 	
+	/**
+	 * Shows the next page of rows.
+	 */
 	protected void nextCommand()
 	{
 		if (elementIndex < rows.size())
@@ -93,11 +129,18 @@ abstract public class PageView implements Callback
 		}
 	}
 	
+	/**
+	 * Ends the PageView.
+	 */
 	protected void stop()
 	{
 		run = false;
 	}
 	
+	/**
+	 * Handle user input for selecting an option.
+	 * @param command
+	 */
 	public void doCommand(String command)
 	{
 		if (command.equals("s")) { selectCommand(); } 
@@ -114,6 +157,10 @@ abstract public class PageView implements Callback
 		doCustomFinish();
 	}
 	
+	/**
+	 * Displays the page infromation and gets user input.
+	 * @param size
+	 */
 	public void pageView(int size)
 	{
 		pageSize = size;

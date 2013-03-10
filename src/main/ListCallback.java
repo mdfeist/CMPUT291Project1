@@ -67,7 +67,11 @@ public class ListCallback extends PageView
 			break;
 		}
 	}
-	
+	/**
+	 * Removes an ad and all purchases associated with the ad
+	 * from the database.
+	 * @param id
+	 */
 	private void remove(String id)
 	{
 		// Get connection to database
@@ -106,6 +110,10 @@ public class ListCallback extends PageView
 		}
 	}
 	
+	/**
+	 * Users can select a promotion for the given ad.
+	 * @param id
+	 */
 	private void addPromo(String id)
 	{
 		AddPromoCallback promo = new AddPromoCallback(id);

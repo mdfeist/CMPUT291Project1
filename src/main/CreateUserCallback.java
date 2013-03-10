@@ -10,7 +10,7 @@ package main;
 public class CreateUserCallback implements Callback {
 
 	public CreateUserCallback() {}
-	
+
 	public void createView()
 	{	
 		// User Info
