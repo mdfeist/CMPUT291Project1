@@ -34,24 +34,29 @@ public class UserSearchCallback extends PageView
 			
 			String command = Menu.getKeyBoard();
 			
-			switch (command.toCharArray()[0])
+			if (command.length() == 0)
 			{
-				case 'e':
-					rows = searchEmail();
-					break;
-				
-				case 'n':
-					rows = searchName();
-					pageView(5);
-					break;
-				
-				case 'q':
-					run = false;
-					break;
+				System.out.println("Error: No command given.");
+			} else {
+				switch (command.toCharArray()[0])
+				{
+					case 'e':
+						rows = searchEmail();
+						break;
 					
-				default:
-					System.out.println("Error: Unknown command.");
-					break;
+					case 'n':
+						rows = searchName();
+						pageView(5);
+						break;
+					
+					case 'q':
+						run = false;
+						break;
+						
+					default:
+						System.out.println("Error: Unknown command.");
+						break;
+				}
 			}
 		}
 	}
@@ -235,23 +240,29 @@ public class UserSearchCallback extends PageView
 				
 				String command = Menu.getKeyBoard();
 				
-				switch (command.toCharArray()[0])
+				if (command.length() == 0)
 				{
-					case 'l':
-						showReviewTexts(id);
-						break;
-					
-					case 'w':
-						writeReview(id);
-						break;
-					
-					case 'q':
-						run = false;
-						break;
+					System.out.println("Error: No command given.");
+				} else
+				{
+					switch (command.toCharArray()[0])
+					{
+						case 'l':
+							showReviewTexts(id);
+							break;
 						
-					default:
-						System.out.println("Error: Unknown command.");
-						break;
+						case 'w':
+							writeReview(id);
+							break;
+						
+						case 'q':
+							run = false;
+							break;
+							
+						default:
+							System.out.println("Error: Unknown command.");
+							break;
+					}
 				}
 			}
 			
