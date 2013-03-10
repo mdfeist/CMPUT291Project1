@@ -75,7 +75,7 @@ insert into users values ('mike@ujiji.com','Mike Student','test',null);
 
 insert into reviews values (1,5,'good seller, very positive exp' , 'joe@ujiji.com', 'bob@ujiji.com', sysdate);
 insert into reviews values (2,2,'very bad exp' , 'davood@ujiji.com', 'bob@ujiji.com', sysdate);
-insert into reviews values (3,5,'good seller, very positive exp' , 'davood@ujiji.com', 'joe@ujiji.com', sysdate);
+insert into reviews values (3,5,'good seller, very positive exp' , 'davood@ujiji.com', 'joe@ujiji.com', sysdate + 5);
 insert into reviews values (4,4,'very positive exp' , 'bob@ujiji.com', 'joe@ujiji.com', sysdate);
 insert into reviews values (5,5,'good' , 'adam@sport.com', 'joe@ujiji.com', sysdate);
 insert into reviews values (6,5,'good' , 'bob@ujiji.com', 'adam@sport.com', sysdate);
