@@ -38,7 +38,6 @@ public class PostCallback implements Callback
 		
 		// Prompt the user for an ad title
 		
-		
 	}
 	
 	// Creates a new aid for the new ad
