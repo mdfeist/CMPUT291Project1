@@ -1,6 +1,7 @@
 package main;
 /**
- * Main function to start the program.
+ * Main function to start the program. The 
+ * program begins with a main menu.
  * 
  * @author Michael Feist and George Coomber
  */

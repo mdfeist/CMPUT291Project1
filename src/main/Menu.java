@@ -72,6 +72,10 @@ public class Menu {
 		}
 	}
 
+	/**
+	 * Reads user input from the keyboard. 
+	 * @return keyboard input
+	 */
 	public static String getKeyBoard() {
 		String str = null;
 

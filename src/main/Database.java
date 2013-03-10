@@ -74,12 +74,17 @@ public class Database {
 
 		return _instance;
 	}
-	
+	/**
+	 * Get the database connection.
+	 */
 	public Connection getConnection()
 	{
 		return _connection;
 	}
 	
+	/**
+	 * Close the current database connection.
+	 */
 	public void closeConnection()
 	{
 		// Close Connection

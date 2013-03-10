@@ -139,7 +139,12 @@ public class User {
 			System.err.println("SQLException: " + e.getMessage());
 		}
 	}
-	
+	/**
+	 * Create a new user and adds them to the database.
+	 * @param email between 0 and 20 characters.
+	 * @param name between 0 and 20 characters.
+	 * @param password between 0 and 4 characters.
+	 */
 	public void create(String email, String name, String password) {
 		
 		if (email.length() > 20)

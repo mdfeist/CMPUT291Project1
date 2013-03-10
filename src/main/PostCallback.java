@@ -19,8 +19,10 @@ public class PostCallback implements Callback
 	
 	public PostCallback() {}
 	
-	/* Allows the user to post an ad by providing ad type, ad title,
-	* price, description, location, and category*/
+	/**
+	 * Allows the user to post an ad by providing ad type, ad title,
+	 * price, description, location, and category.
+	 */
 	public void createAd()
 	{	
 		boolean validPrice = false;
@@ -166,7 +168,10 @@ public class PostCallback implements Callback
 		
 	}
 	
-	// Creates a new aid for the new ad
+	/**
+	 * Creates a new aid for the new ad.
+	 * @return
+	 */
 	public String createNewAid() {
 		String newAid = "a001";
 		

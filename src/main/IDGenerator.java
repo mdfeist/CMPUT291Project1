@@ -2,6 +2,7 @@ package main;
 
 /**
  * Creates a new key id for the database.
+ * Used for posting new ads and purchases.
  * 
  * @author Michael Feist
  *

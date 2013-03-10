@@ -6,7 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
+/**
+ * Callback class that lists the existing categories in the Categories
+ * table. The user chooses a category from the list to get the cat string.
+ * 
+ * @author George Coomber
+ *
+ */
 public class CategoryCallback extends PageView
 {
 	private String category = null;
@@ -15,7 +21,9 @@ public class CategoryCallback extends PageView
 		pageTitle = "Select Category";
 	}
 	
-	// Lists the rows from the Category table
+	/**
+	 *  Lists the rows from the Category table
+	 */
 	public void view()
 	{	
 		rows = getRows();
