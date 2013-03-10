@@ -161,7 +161,7 @@ public class User {
 		
 		if (password.length() > 4)
 		{
-			System.out.println("Password myst be less than or equal to 4 characters.");
+			System.out.println("Password must be less than or equal to 4 characters.");
 			return;
 		}
 		

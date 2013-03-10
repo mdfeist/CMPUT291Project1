@@ -88,8 +88,6 @@ public class LoginReviewCallback extends PageView {
 					"' " +
 					"ORDER BY rdate DESC";
 			
-			System.out.println(query);
-			
 			ResultSet rs = stmt.executeQuery(query);
 
 			while (rs.next())
