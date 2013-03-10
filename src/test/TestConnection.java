@@ -13,6 +13,9 @@ public class TestConnection {
 	@Test
 	public void test() {
 		
+		System.out.println("Connecting to " + Database.m_url);
+		System.out.println("With user " + Database.m_userName);
+		
 		Connection m_com = Database.getInstance().getConnection();
 		
 		if (m_com == null)
