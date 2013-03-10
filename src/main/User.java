@@ -141,6 +141,25 @@ public class User {
 	}
 	
 	public void create(String email, String name, String password) {
+		
+		if (email.length() > 20)
+		{
+			System.out.println("Email must be less than or equal to 20 characters.");
+			return;
+		}
+		
+		if (name.length() > 20)
+		{
+			System.out.println("Name must be less than or equal to 20 characters.");
+			return;
+		}
+		
+		if (password.length() > 4)
+		{
+			System.out.println("Password myst be less than or equal to 4 characters.");
+			return;
+		}
+		
 		// Get connection to database
 		Connection m_con = Database.getInstance().getConnection();
 

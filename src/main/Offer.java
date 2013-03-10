@@ -20,6 +20,6 @@ public class Offer implements DatabaseRow {
 	
 	public String toString()
 	{
-		return String.format("%d4 %d4 %5f", _ono, _ndays, _price);
+		return String.format("Days: %5d\tPrice: %5.2f", _ndays, _price);
 	}
 }
