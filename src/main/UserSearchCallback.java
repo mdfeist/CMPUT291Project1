@@ -113,11 +113,11 @@ public class UserSearchCallback extends PageView
 			// Print out the columns returned by the query (if any)
 			if(rows.size() > 0)
 			{
-				String format = String.format("Row %1$21s %2$21s %3$10s %4$10s",
+				String format = String.format("%1$21s %2$21s %3$10s %4$10s",
 						"Email", "Name", "Ad_Count", "AVG_Rating");
 				
 				System.out.println(format);
-				System.out.println("1   " + rows.get(0).toString());
+				System.out.println(rows.get(0).toString());
 			}
 			else {
 				System.out.println("No users exist matching that email");
@@ -349,12 +349,6 @@ public class UserSearchCallback extends PageView
 		// Boolean to check if the  rating is between 1 and 5
 		boolean isValid = false;
 		
-		Date date = new Date();
-		DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy");
-		
-		// Find the system date in dd/MM/yyyy format
-		String sysdate = dateFormat.format(date);
-		
 		System.out.println("New Review:");
 		
 		// Prompt the user for an int rating between 1 and 5
@@ -417,7 +411,7 @@ public class UserSearchCallback extends PageView
 			// Write the review to the database in the reviews table
 			String query = "INSERT INTO reviews VALUES ('" + rno + "','"
 					+ String.valueOf(rating) + "','" + reviewText + "','"
-					+ email + "','" + id + "','" + sysdate + "')";
+					+ email + "','" + id + "', sysdate)";
 			
 			stmt.executeUpdate(query);
 			stmt.close();

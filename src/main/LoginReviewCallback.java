@@ -73,20 +73,22 @@ public class LoginReviewCallback extends PageView {
 			stmt = m_con.createStatement();
 			
 			String date = User.getInstance().getLoginDate();
+			
 			if (date == null)
 			{
-				return null;
+				date = "0001-01-01 00:00:00.0";
 			}
 			
-			String query = "SELECT rno, rating, text, rdate " +
+			String query = "SELECT rno, rating, text, to_char(rdate,'YYYY-MM-DD HH24:MI:SS') " +
 					"FROM reviews " +
-					"WHERE trunc(rdate) >= TO_DATE('" + 
-					date.substring(0, date.length() - 2) + 
-					"', 'yyyy-mm-dd hh24:mi:ss') " +
+					"WHERE to_char(rdate,'YYYY-MM-DD HH24:MI:SS') >= '" +
+					date + "' " +
 					"AND reviewee = '" +
 					User.getInstance().getEmail() +
 					"' " +
 					"ORDER BY rdate DESC";
+			
+			System.out.println(query);
 			
 			ResultSet rs = stmt.executeQuery(query);
 
