@@ -92,9 +92,9 @@ public class User {
 			stmt = m_con.createStatement();
 			
 			// Query
-			String query = "SELECT email, pass, last_login " + "FROM users "
+			String query = "SELECT email, pwd, last_login " + "FROM users "
 					+ "WHERE trim(email) like '" + email + "'"
-					+ "AND trim(pass) like '" + password + "'";
+					+ "AND trim(pwd) like '" + password + "'";
 
 			ResultSet rs = stmt.executeQuery(query);
 			

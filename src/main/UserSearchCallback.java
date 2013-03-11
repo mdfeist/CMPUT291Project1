@@ -87,10 +87,10 @@ public class UserSearchCallback extends PageView
 			stmt = m_con.createStatement();
 			
 			// Query the database and look for emails matching the keyword
-			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), round(AVG(r.rating), 2)"
+			String query = "Select u.email, u.name, u.last_login, COUNT(distinct a.aid), round(AVG(r.rating), 2)"
 					+ " From (users u LEFT OUTER JOIN ads a ON u.email = a.poster) LEFT OUTER JOIN reviews r ON r.reviewee = u.email" 
 					+ " WHERE trim(email) LIKE '" + keyword.trim() + "'"
-					+ " GROUP BY u.email, u.name, u.pass, u.last_login";
+					+ " GROUP BY u.email, u.name, u.last_login";
 			
 			ResultSet rs = stmt.executeQuery(query);
 			
@@ -101,8 +101,7 @@ public class UserSearchCallback extends PageView
 						rs.getString(2).trim(),
 						rs.getString(3),
 						rs.getString(4),
-						rs.getString(5),
-						rs.getString(6));
+						rs.getString(5));
 
 				rows.add(row);
 			}
@@ -160,10 +159,10 @@ public class UserSearchCallback extends PageView
 			stmt = m_con.createStatement();
 			
 			// Search for users with name like the keyword (case insensitive)
-			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), round(AVG(r.rating), 2)"
+			String query = "Select u.email, u.name, u.last_login, COUNT(distinct a.aid), round(AVG(r.rating), 2)"
 					+ " From (users u LEFT OUTER JOIN ads a ON u.email = a.poster) LEFT OUTER JOIN reviews r ON r.reviewee = u.email" 
 					+ " WHERE UPPER(trim(name)) LIKE '%" + keyword.toUpperCase().trim() + "%'"
-					+ " GROUP BY u.email, u.name, u.pass, u.last_login";
+					+ " GROUP BY u.email, u.name, u.last_login";
 			
 			ResultSet rs = stmt.executeQuery(query);
 			
@@ -209,10 +208,10 @@ public class UserSearchCallback extends PageView
 			stmt = m_con.createStatement();
 			
 			// query the database for a user with email equal to id
-			String query = "Select u.email, u.name, u.pass, u.last_login, COUNT(distinct a.aid), round(AVG(r.rating), 2)"
+			String query = "Select u.email, u.name, COUNT(distinct a.aid), round(AVG(r.rating), 2)"
 					+ " From (users u LEFT OUTER JOIN ads a ON u.email = a.poster) LEFT OUTER JOIN reviews r ON r.reviewee = u.email" 
 					+ " WHERE trim(email) LIKE '" + id + "'"
-					+ " GROUP BY u.email, u.name, u.pass, u.last_login";
+					+ " GROUP BY u.email, u.name";
 
 			ResultSet rs = stmt.executeQuery(query);
 
@@ -221,10 +220,8 @@ public class UserSearchCallback extends PageView
 			{
 				System.out.println("Email: " + rs.getString(1));
 				System.out.println("Name: " + rs.getString(2));
-				System.out.println("Pass: " + rs.getString(3));
-				System.out.println("Last_Login: " + rs.getString(4));
-				System.out.println("Ad_Count " + rs.getString(5));
-				System.out.println("Avg_Rating: " + rs.getString(6));
+				System.out.println("Ad_Count " + rs.getString(3));
+				System.out.println("Avg_Rating: " + rs.getString(4));
 				
 			} else
 			{

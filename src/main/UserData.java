@@ -8,7 +8,6 @@ public class UserData implements DatabaseRow
 {
 	private String _email;
 	private String _name;
-	private String _pass;
 	private String _last_login;
 	private String _ad_count;
 	private String _avg_rating;
@@ -16,14 +15,12 @@ public class UserData implements DatabaseRow
 	
 	public UserData(String email,
 			String name,
-			String pass,
 			String last_login,
 			String ad_count,
 			String avg_rating)
 	{
 		_email = email;
 		_name = name;
-		_pass = pass;
 		_last_login = last_login;
 		_ad_count = ad_count;
 		_avg_rating = avg_rating;
@@ -62,21 +59,6 @@ public class UserData implements DatabaseRow
 	
 		this._name = name;
 	}
-
-	
-	public String getPass()
-	{
-	
-		return _pass;
-	}
-
-	
-	public void setPass(String pass)
-	{
-	
-		this._pass = pass;
-	}
-
 	
 	public String getLastLogin()
 	{

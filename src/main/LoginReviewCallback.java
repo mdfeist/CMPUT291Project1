@@ -26,10 +26,11 @@ public class LoginReviewCallback extends PageView {
 			if (rows.size() != 0)
 			{
 				pageView(3);
+				return;
+			} else {
+				System.out.println("You have no new reviews.\n");
+				return;
 			}
-			
-			System.out.println("You have no new reviews.\n");
-			return;
 		}
 		
 		System.out.println("Unable to get data.\n");
